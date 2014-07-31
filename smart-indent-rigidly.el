@@ -30,8 +30,11 @@
 ;; USA
 
 ;;; Commentary
-
-
+;;
+;; useful for indenting / undenting lines or regions of text in
+;; whitespace sensitive language modes like haml-mode, sass-mode,
+;; coffee-mode etc
+;;
 ;;; Usage
 ;;
 ;; (require 'smart-indent-rigidly)
