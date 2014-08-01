@@ -72,6 +72,7 @@
     map)
   "The keymap used in `smart-indent-rigidly-keymap' buffers.")
 
+;;;###autoload
 (define-minor-mode smart-indent-rigidly-mode
   "Un/Indent region if active or current line
 
@@ -108,9 +109,7 @@
            (if (region-active-p)
                (save-excursion
                  ;; indent every line in the region
-                 (goto-line
-                  (line-number-at-pos
-                   (region-beginning)))
+                 (goto-char (region-beginning))
                  (line-beginning-position))
              ;; otherwise just indent the line
              (line-beginning-position)))
