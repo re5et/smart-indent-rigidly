@@ -5,7 +5,8 @@
 ;; Author: atom smith
 ;; URL: https://github.com/re5et/smart-indent-rigidly
 ;; Created: 07 Jul 2014
-;; Version: 0.0.1
+;; Version: 20140801.1051
+;; X-Original-Version: 0.0.1
 ;; Keywords: indenting coffee-mode haml-mode sass-mode
 
 ;; This file is NOT part of GNU Emacs.
@@ -54,32 +55,30 @@
   :group 'editing)
 
 (defcustom smart-indent-indent-key
-  "<C-tab>"
+  "<tab>"
   "the key binding for indent"
   :type 'string
   :group 'smart-indent-rigidly)
 
 (defcustom smart-indent-unindent-key
-  "<C-S-iso-lefttab>"
+  "<backtab>"
   "the key binding for unindent"
   :type 'string
   :group 'smart-indent-rigidly)
-
-(defvar smart-indent-rigidly-keymap
-  (let ((map (make-sparse-keymap)))
-    (define-key map (read-kbd-macro smart-indent-indent-key) 'smart-rigid-indent)
-    (define-key map (read-kbd-macro smart-indent-unindent-key) 'smart-rigid-unindent)
-    map)
-  "The keymap used in `smart-indent-rigidly-keymap' buffers.")
 
 ;;;###autoload
 (define-minor-mode smart-indent-rigidly-mode
   "Un/Indent region if active or current line
 
-\\{smart-indent-rigidly-keymap}"
+\\{smart-indent-rigidly-mode-map}"
   nil
   " sir"
-  :keymap smart-indent-rigidly-keymap)
+  :keymap (make-sparse-keymap)
+  :after-hook (progn
+                (define-key smart-indent-rigidly-mode-map
+                  (read-kbd-macro smart-indent-indent-key) 'smart-rigid-indent)
+                (define-key smart-indent-rigidly-mode-map
+                  (read-kbd-macro smart-indent-unindent-key) 'smart-rigid-unindent)))
 
 (defun smart-rigid-indent ()
   "Indent active region or current line by tab-width"
